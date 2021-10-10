@@ -1,0 +1,13 @@
+services:
+
+  dinner_hall:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      -   "80:80"
+    networks:
+      -   restaurant
+
+networks:
+  restaurant:
