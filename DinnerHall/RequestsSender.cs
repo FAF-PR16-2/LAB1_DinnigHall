@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace DinnerHall
 {
-    public static class RequestsSenderClient
+    public static class RequestsSender
     {
         // public static void SendOrderRequest(OrderData orderData)
         // {

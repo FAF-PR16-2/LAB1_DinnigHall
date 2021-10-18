@@ -57,7 +57,7 @@ namespace DinnerHall
                         return;
                     }
                     var distributionData = await context.Request.ReadFromJsonAsync<DistributionData>();
-                    await context.Response.WriteAsync(distributionData.ToString());
+                    Console.WriteLine(distributionData?.ToString());
                     //Task.Run(() => );
                         //UpdateDatabaseAsync(weather);
                     

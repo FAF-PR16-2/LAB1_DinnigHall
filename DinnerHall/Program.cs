@@ -4,9 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace DinnerHall
 {
@@ -16,10 +14,34 @@ namespace DinnerHall
         {
             CreateHostBuilder(args).Build().RunAsync();
 
-            //RequestsSenderClient.Configure();
+            
+            RandomOrdersGenerator.GetInstance().Configure();
 
-            var randomOrdersGenerator = new RandomOrdersGenerator();
-            await randomOrdersGenerator.StartAsync();
+            List<Table> tables = new List<Table>();
+            List<Waiter> waiters = new List<Waiter>();
+
+            foreach (var tableId in Enumerable.Range(0, Configuration.TableCount).ToArray())
+            {
+                tables.Add(new Table(tableId));
+            }
+
+            foreach (var table in tables)
+            {
+                table.Start();
+            }
+            
+            foreach (var waiterId in Enumerable.Range(0, Configuration.WaitersCount).ToArray())
+            {
+                waiters.Add(new Waiter(waiterId, tables.ToArray()));
+            }
+            
+            foreach (var waiter in waiters)
+            {
+                waiter.Start();
+            }
+            
+            
+            //await randomOrdersGenerator.StartAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
