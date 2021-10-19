@@ -13,13 +13,23 @@ namespace DinnerHall
         
         private Table[] _tables;
         private Thread _thread;
+
+        private List<DistributionData> _ordersToServe;
         // private Mutex _mutex;
         
         public Waiter(int id, Table[] tables)
         {
             _id = id;
             _tables = tables;
+
+            _ordersToServe = new List<DistributionData>();
+            
             _thread = new Thread(Update);
+        }
+
+        public void ServeOrder(DistributionData distributionData)
+        {
+            _ordersToServe.Add(distributionData);
         }
 
         public void Start() //start roaming
@@ -54,6 +64,20 @@ namespace DinnerHall
                         orderData.pick_up_time = DateTimeOffset.Now.ToUnixTimeSeconds();
                         
                         TrySendRequest(orderData);
+                    }
+
+                    if (table.Status == Table.TableStatus.WaitingForOrder)
+                    {
+                        var ordersToServe = new List<DistributionData>(_ordersToServe); 
+                        
+                        foreach (var order in ordersToServe)
+                        {
+                            if (order.table_id == table.Id)
+                            {
+                                table.ReceiveOrder(order);
+                                _ordersToServe.Remove(order);
+                            }
+                        }
                     }
                 }
             }

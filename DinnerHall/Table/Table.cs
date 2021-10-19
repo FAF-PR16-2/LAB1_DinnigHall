@@ -78,11 +78,10 @@ namespace DinnerHall
             return true;
         }
 
-        public void ReceiveOrder()
+        public void ReceiveOrder(DistributionData distributionData)
         {
-            
             _waitHandle.Set();
-            Console.WriteLine("<- Thread:" + Thread.CurrentThread.ManagedThreadId + " Table ID:" + Id + " Order ID:" + CurrentOrderData.order_id);// +  " ----- \n" + orderData + "\n ----- \n" );
+            Console.WriteLine("<- Thread:" + Thread.CurrentThread.ManagedThreadId + " Table ID:" + Id + " Order ID:" + distributionData.order_id);// +  " ----- \n" + orderData + "\n ----- \n" );
         }
         
     }

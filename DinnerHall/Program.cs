@@ -34,6 +34,8 @@ namespace DinnerHall
             {
                 waiters.Add(new Waiter(waiterId, tables.ToArray()));
             }
+
+            DistributionHallManager.GetInstance().Waiters = waiters.ToArray();
             
             foreach (var waiter in waiters)
             {

@@ -10,26 +10,6 @@ namespace DinnerHall
 {
     public static class RequestsSender
     {
-        // public static void SendOrderRequest(OrderData orderData)
-        // {
-        //     var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:81/order");
-        //     httpWebRequest.ContentType = "application/json";
-        //     httpWebRequest.Method = "POST";
-        //
-        //     using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-        //     {
-        //         string json = JsonSerializer.Serialize(orderData);
-        //
-        //         streamWriter.Write(json);
-        //     }
-        //
-        //     var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-        //     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        //     {
-        //         var result = streamReader.ReadToEnd();
-        //     }
-        // }
-        
         public static void SendOrderRequest(OrderData orderData)
         {
             using (var client = new WebClient())
