@@ -82,6 +82,40 @@ namespace DinnerHall
         {
             _waitHandle.Set();
             Console.WriteLine("<- Thread:" + Thread.CurrentThread.ManagedThreadId + " Table ID:" + Id + " Order ID:" + distributionData.order_id);// +  " ----- \n" + orderData + "\n ----- \n" );
+            SetRating(distributionData);
+        }
+
+        private void SetRating(DistributionData distributionData)
+        {
+            double rating = 0;
+            
+             var orderTotalPreparingTime = (DateTimeOffset.Now.ToUnixTimeSeconds() - distributionData.pick_up_time) * Configuration.TimeUnit * 10;
+
+             
+             switch (orderTotalPreparingTime)
+             {
+                 case var _ when orderTotalPreparingTime < distributionData.max_wait * Configuration.TimeUnit:
+                     rating = 5;
+                     break;
+                 case var _ when orderTotalPreparingTime < distributionData.max_wait * Configuration.TimeUnit * 1.1:
+                     rating = 4;
+                     break;
+                 case var _ when orderTotalPreparingTime < distributionData.max_wait * Configuration.TimeUnit * 1.2:
+                     rating = 3;
+                     break;
+                 case var _ when orderTotalPreparingTime < distributionData.max_wait * Configuration.TimeUnit * 1.3:
+                     rating = 2;
+                     break;
+                 case var _ when orderTotalPreparingTime < distributionData.max_wait * Configuration.TimeUnit * 1.4:
+                     rating = 1;
+                     break;
+                 default:
+                     rating = 0;
+                     break;
+             }
+             
+            
+            Console.WriteLine("Order ID:" + distributionData.order_id + " Rating:" + rating + " OrderTotalPreparingTime:" + orderTotalPreparingTime + " OrderMaxWait:" + distributionData.max_wait * Configuration.TimeUnit);
         }
         
     }
