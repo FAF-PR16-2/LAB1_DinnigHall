@@ -9,7 +9,7 @@ namespace DinnerHall
 {
     public class RandomOrdersGenerator : Singleton<RandomOrdersGenerator>
     {
-        private int _lastOrderId;
+        // int _lastOrderId;
         private int[] _tablesId;
         private int[] _waitersId;
         private int[] _priorities;
@@ -20,7 +20,7 @@ namespace DinnerHall
 
         public void Configure()
         {
-            _lastOrderId = 0;
+            //_lastOrderId = 0;
             //_tablesId = Enumerable.Range(0, Configuration.GetInstance().TableCount).ToArray();
             _priorities = new []{1, 2, 3, 4, 5};
             _itemsBuilder = new ItemsBuilder();
@@ -33,7 +33,7 @@ namespace DinnerHall
 
             var orderData = new OrderData
             {
-                order_id = _lastOrderId++,
+                order_id = new Guid(),
                 table_id = tableId,
                 waiter_id = 0,
                 items = new int[random.Next(1, 5)],

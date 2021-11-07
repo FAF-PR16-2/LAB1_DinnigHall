@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using DinnerHall.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,10 +31,7 @@ namespace DinnerHall
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DinnerHall", Version = "v1" });
-            });
+            services.AddSingleton<IOrdersService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,31 +41,31 @@ namespace DinnerHall
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                // endpoints.MapGet("/hello", async context =>
-                // {
-                //     await context.Response.WriteAsync("Hello, World!");
-                // });
-                endpoints.MapPost("/distribution", async context =>
-                {
-                    if (!context.Request.HasJsonContentType())
-                    {
-                        context.Response.StatusCode = (int)HttpStatusCode.UnsupportedMediaType;
-                        return;
-                    }
-                    var distributionData = await context.Request.ReadFromJsonAsync<DistributionData>();
-                    Console.WriteLine(distributionData?.ToString());
-
-                    
-                    DistributionHallManager.GetInstance().ServeOrder(distributionData);
-                    //Task.Run(() => );
-                        //UpdateDatabaseAsync(weather);
-                    
-
-                    context.Response.StatusCode = (int) HttpStatusCode.Accepted;
-                });
-            });
+            // app.UseEndpoints(endpoints =>
+            // {
+            //     // endpoints.MapGet("/hello", async context =>
+            //     // {
+            //     //     await context.Response.WriteAsync("Hello, World!");
+            //     // });
+            //     endpoints.MapPost("/distribution", async context =>
+            //     {
+            //         if (!context.Request.HasJsonContentType())
+            //         {
+            //             context.Response.StatusCode = (int)HttpStatusCode.UnsupportedMediaType;
+            //             return;
+            //         }
+            //         var distributionData = await context.Request.ReadFromJsonAsync<DistributionData>();
+            //         Console.WriteLine(distributionData?.ToString());
+            //
+            //         
+            //         DistributionHallManager.GetInstance().ServeOrder(distributionData);
+            //         //Task.Run(() => );
+            //             //UpdateDatabaseAsync(weather);
+            //         
+            //
+            //         context.Response.StatusCode = (int) HttpStatusCode.Accepted;
+            //     });
+            // });
         }
     }
 }

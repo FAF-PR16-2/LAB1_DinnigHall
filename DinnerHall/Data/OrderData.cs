@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DinnerHall
 {
     public class OrderData
     {
-        public int order_id { get; set; }
+        public Guid order_id { get; set; }
         public int table_id { get; set; }
         public int waiter_id { get; set; }
         public int[] items { get; set; }

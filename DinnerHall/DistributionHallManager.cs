@@ -1,4 +1,5 @@
-﻿using DinnerHall.Singleton;
+﻿using DinnerHall.Models;
+using DinnerHall.Singleton;
 
 namespace DinnerHall
 {
@@ -11,13 +12,13 @@ namespace DinnerHall
             
         }
 
-        public void ServeOrder(DistributionData distributionData)
+        public void ServeOrder(Order order)
         {
             foreach (var waiter in Waiters)
             {
-                if (waiter.Id == distributionData.waiter_id)
+                if (waiter.Id == order.DistributionData.waiter_id)
                 {
-                    waiter.ServeOrder(distributionData);
+                    waiter.ServeOrder(order.DistributionData);
                 }
             }
         }
