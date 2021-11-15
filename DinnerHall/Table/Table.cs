@@ -72,7 +72,7 @@ namespace DinnerHall
             CurrentOrderData = RandomOrdersGenerator.GetInstance().OrderDataGenerator(Id);
 
             Status = TableStatus.WaitingForOrder;
-            Console.WriteLine("-> Thread:" + Thread.CurrentThread.ManagedThreadId + " Table ID:" + Id + " Order ID:" + CurrentOrderData.order_id);// +  " ----- \n" + orderData + "\n ----- \n" );
+            //Console.WriteLine("-> Thread:" + Thread.CurrentThread.ManagedThreadId + " Table ID:" + Id + " Order ID:" + CurrentOrderData.order_id);// +  " ----- \n" + orderData + "\n ----- \n" );
             _mutex.ReleaseMutex();
 
             return true;
@@ -81,7 +81,7 @@ namespace DinnerHall
         public void ReceiveOrder(DistributionData distributionData)
         {
             _waitHandle.Set();
-            Console.WriteLine("<- Thread:" + Thread.CurrentThread.ManagedThreadId + " Table ID:" + Id + " Order ID:" + distributionData.order_id);// +  " ----- \n" + orderData + "\n ----- \n" );
+            //Console.WriteLine("<- Thread:" + Thread.CurrentThread.ManagedThreadId + " Table ID:" + Id + " Order ID:" + distributionData.order_id);// +  " ----- \n" + orderData + "\n ----- \n" );
             SetRating(distributionData);
         }
 

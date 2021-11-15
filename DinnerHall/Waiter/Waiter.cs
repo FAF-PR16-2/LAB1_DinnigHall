@@ -64,6 +64,7 @@ namespace DinnerHall
                         orderData.pick_up_time = DateTimeOffset.Now.ToUnixTimeSeconds();
                         
                         TrySendRequest(orderData);
+                        DistributionHallManager.GetInstance().AddOrderDataToList(orderData);
                     }
 
                     if (table.Status == Table.TableStatus.WaitingForOrder)

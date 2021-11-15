@@ -33,7 +33,7 @@ namespace DinnerHall
 
             var orderData = new OrderData
             {
-                order_id = new Guid(),
+                order_id = Guid.NewGuid(),
                 table_id = tableId,
                 waiter_id = 0,
                 items = new int[random.Next(1, 5)],

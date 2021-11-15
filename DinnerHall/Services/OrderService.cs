@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace DinnerHall.Services
 {
     public class OrderService : IOrdersService
     {
-        private readonly ConcurrentDictionary<Guid, Order> _orders = new();
+        private readonly ConcurrentDictionary<Guid, Order> _orders = DistributionHallManager.GetInstance()._Orders;
         
         public IEnumerable<Order> Get()
         {

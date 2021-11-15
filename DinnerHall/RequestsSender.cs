@@ -14,9 +14,11 @@ namespace DinnerHall
         {
             using (var client = new WebClient())
             {
+                
                 var dataString = JsonSerializer.Serialize(orderData);
+                Console.WriteLine(dataString);
                 client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
-                client.UploadString(new Uri("http://host.docker.internal:6001/order"), "POST", dataString);
+                //client.UploadString(new Uri("http://host.docker.internal:81/order"), "POST", dataString);
             }
         }
     }

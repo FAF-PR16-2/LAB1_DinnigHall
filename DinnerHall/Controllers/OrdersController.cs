@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DinnerHall.Controllers
 {
     
-    [Route("/")]
+    [Route("/deprecated")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -31,14 +31,14 @@ namespace DinnerHall.Controllers
         //     return Ok(_ordersService.Get(id));
         // }
 
-        [HttpPost("distribution")]
-        public ActionResult<Order> PostDistribution([FromBody] DistributionData distributionData)//Order order)
+        [HttpPost("/distribution")]
+        public ActionResult PostDistribution([FromBody] DistributionData distributionData)//Order order)
         {
             _ordersService.Distribute(distributionData.order_id, distributionData);
             return Ok();
         }
         
-        [HttpPost("/v2/order")]
+        [HttpPost("v2/order")]
         public ActionResult<Order> PostOrder([FromBody] Order order)
         {
             return Ok(_ordersService.Create(order));

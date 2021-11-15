@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using DinnerHall.Models;
 using DinnerHall.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,33 +40,33 @@ namespace DinnerHall
         {
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
-            // app.UseEndpoints(endpoints =>
-            // {
-            //     // endpoints.MapGet("/hello", async context =>
-            //     // {
-            //     //     await context.Response.WriteAsync("Hello, World!");
-            //     // });
-            //     endpoints.MapPost("/distribution", async context =>
-            //     {
-            //         if (!context.Request.HasJsonContentType())
-            //         {
-            //             context.Response.StatusCode = (int)HttpStatusCode.UnsupportedMediaType;
-            //             return;
-            //         }
-            //         var distributionData = await context.Request.ReadFromJsonAsync<DistributionData>();
-            //         Console.WriteLine(distributionData?.ToString());
-            //
-            //         
-            //         DistributionHallManager.GetInstance().ServeOrder(distributionData);
-            //         //Task.Run(() => );
-            //             //UpdateDatabaseAsync(weather);
-            //         
-            //
-            //         context.Response.StatusCode = (int) HttpStatusCode.Accepted;
-            //     });
-            // });
+            app.UseEndpoints(endpoints =>
+            {
+                // endpoints.MapGet("/hello", async context =>
+                // {
+                //     await context.Response.WriteAsync("Hello, World!");
+                // });
+                endpoints.MapPost("/distribution", async context =>
+                {
+                    if (!context.Request.HasJsonContentType())
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.UnsupportedMediaType;
+                        return;
+                    }
+                    var distributionData = await context.Request.ReadFromJsonAsync<DistributionData>();
+                    Console.WriteLine(distributionData?.ToString());
+            
+                    
+                    DistributionHallManager.GetInstance().ServeOrder(new Order {DistributionData = distributionData});
+                    //Task.Run(() => );
+                        //UpdateDatabaseAsync(weather);
+                    
+            
+                    context.Response.StatusCode = (int) HttpStatusCode.Accepted;
+                });
+            });
         }
     }
 }
